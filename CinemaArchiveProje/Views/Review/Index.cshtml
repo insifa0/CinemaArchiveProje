@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CinemaArchiveProje.Models.Review>
+
+@{
+    ViewData["Title"] = "Yorumlar";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Yorum</th>
+            <th>Puan</th>
+            <th>Tarih</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>@review.Content</td>
+                <td>@review.Rating</td>
+                <td>@review.DatePosted.ToString("dd MMM yyyy")</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = review.Id })">Düzenle</a> |
+                    <a href="@Url.Action("Delete", new { id = review.Id })">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a href="@Url.Action("Create", new { movieId = ViewData["MovieId"] })" class="btn btn-primary">Yeni Yorum Ekle</a>
+</p>

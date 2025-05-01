@@ -1,0 +1,23 @@
+﻿@model CinemaArchiveProje.Models.Director
+
+@{
+    ViewData["Title"] = "Yönetmeni Sil";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Yönetmeni silmek istediğinize emin misiniz?</h4>
+<hr />
+
+<div>
+    <h4>@Model.Name</h4>
+    <p>@Model.Biography</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>
+
+

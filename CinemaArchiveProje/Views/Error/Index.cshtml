@@ -1,0 +1,16 @@
+﻿@model CinemaArchiveProje.Models.ErrorViewModel
+
+<h2>An Error Occurred</h2>
+
+@if (Model.ShowRequestId)
+{
+    <div>
+        <h4>Request ID: @Model.RequestId</h4>
+    </div>
+}
+else
+{
+    <div>
+        <p>Sorry, an unexpected error has occurred. Please try again later.</p>
+    </div>
+}

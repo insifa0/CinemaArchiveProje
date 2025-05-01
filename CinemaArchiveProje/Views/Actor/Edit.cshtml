@@ -1,0 +1,30 @@
+﻿@model CinemaArchiveProje.Models.Actor
+
+@{
+    ViewData["Title"] = "Aktör Düzenle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Aktör Bilgilerini Düzenleyin</h4>
+<hr />
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Biography" class="control-label"></label>
+        <textarea asp-for="Biography" class="form-control"></textarea>
+        <span asp-validation-for="Biography" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </div>
+</form>
+
+<div>
+    <a href="@Url.Action("Index")">Geri Dön</a>
+</div>
