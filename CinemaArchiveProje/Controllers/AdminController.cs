@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CinemaArchiveProje.Controllers
 {
-    [Authorize(Roles = "Admin")]
+
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -14,7 +14,6 @@ namespace CinemaArchiveProje.Controllers
         {
             _context = context;
         }
-        
 
         public async Task<IActionResult> Index()
         {

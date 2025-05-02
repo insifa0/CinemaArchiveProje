@@ -1,0 +1,31 @@
+﻿@model CinemaArchiveProje.Models.Movie
+
+@{
+    ViewData["Title"] = "Film Detayları";
+}
+
+<h2>@Model.Title</h2>
+
+<dl class="row">
+    <dt class="col-sm-2">Açıklama</dt>
+    <dd class="col-sm-10">@Model.Description</dd>
+
+    <dt class="col-sm-2">Yayın Tarihi</dt>
+    <dd class="col-sm-10">@Model.ReleaseDate.ToShortDateString()</dd>
+
+    <dt class="col-sm-2">Yönetmen</dt>
+    <dd class="col-sm-10">@Model.Director?.Name</dd>
+
+    <dt class="col-sm-2">Tür</dt>
+    <dd class="col-sm-10">@Model.Genre?.Name</dd>
+
+    <dt class="col-sm-2">Ülke</dt>
+    <dd class="col-sm-10">@Model.Country?.Name</dd>
+</dl>
+
+@if (!string.IsNullOrEmpty(Model.PosterUrl))
+{
+    <img src="@Model.PosterUrl" alt="@Model.Title Poster" class="img-fluid" />
+}
+
+<a asp-action="Index" class="btn btn-secondary">Geri</a>

@@ -27,5 +27,7 @@ namespace CinemaArchiveProje.Models
         public List<MovieActor>? MovieActors { get; set; } // Çoktan çoğa ilişki
 
         public List<Review>? Reviews { get; set; }
+        public string? PosterUrl { get; set; }
+
     }
 }

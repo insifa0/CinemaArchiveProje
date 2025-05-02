@@ -1,10 +1,12 @@
 ﻿using CinemaArchiveProje.Data;
 using CinemaArchiveProje.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaArchiveProje.Controllers
 {
+    
     public class DirectorController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -16,7 +18,14 @@ namespace CinemaArchiveProje.Controllers
 
         // Index - Yönetmenleri listele
         public async Task<IActionResult> Index()
-        {
+        {   
+            // Admin misin diye kontrol ediyorum burada
+            var role = HttpContext.Session.GetString("Role");
+            if (role != "Admin")
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+
             return View(await _context.Directors.ToListAsync());
         }
 

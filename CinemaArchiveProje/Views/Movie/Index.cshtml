@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CinemaArchiveProje.Models.Movie>
+
+@{
+    ViewData["Title"] = "Filmler";
+}
+
+<h1>Film Listesi</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Yeni Film Ekle</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Başlık</th>
+            <th>Yönetmen</th>
+            <th>Tür</th>
+            <th>Ülke</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Director?.Name</td>
+                <td>@movie.Genre?.Name</td>
+                <td>@movie.Country?.Name</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info btn-sm">Detay</a>
+                    <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-primary">Düzenle</a>
+                    <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
