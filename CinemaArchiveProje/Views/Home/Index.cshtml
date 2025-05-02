@@ -1,13 +1,95 @@
-﻿@{
-    ViewData["Title"] = "Anasayfa";
+﻿@model IEnumerable<CinemaArchiveProje.Models.Movie>
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Cinema Archive Projesine Hoş Geldiniz!</h1>
-    <p class="lead">Bu arşivde film bilgileri, yönetmenler, oyuncular ve yorumlara ulaşabilirsiniz.</p>
+<h1>Hoş geldiniz!</h1>
 
-    <div class="mt-4">
-        <a asp-controller="Movie" asp-action="Index" class="btn btn-primary btn-lg">Filmleri Görüntüle</a>
-        <a asp-controller="Director" asp-action="Index" class="btn btn-secondary btn-lg">Yönetmenleri Görüntüle</a>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>@User.Identity.Name olarak giriş yaptınız.</p>
+}
+else
+{
+    <p>Lütfen giriş yapınız ya da kayıt olunuz.</p>
+}
+
+<h3>Son Eklenen Filmler</h3>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Henüz film eklenmemiş.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var movie in Model)
+        {
+            <li class="list-group-item">
+                <p> Name: <strong>@movie.Title</strong>
+                    Date:  <strong>@movie.ReleaseDate.ToShortDateString()</strong>
+                    Country: @movie.Country
+                    Genre: @movie.Genre
+                    Description: @movie.Description
+                    Director: @movie.Director
+                </p>  
+            </li>
+        }
+    </ul>
+}
+
+<hr />
+
+<!-- Views/Home/Index.cshtml -->
+<h3>Son Yorumlar</h3>
+
+@if (ViewBag.LatestReviews != null && ((IEnumerable<CinemaArchiveProje.Models.Review>)ViewBag.LatestReviews).Any())
+{
+    <ul class="list-group">
+        @foreach (var review in (IEnumerable<CinemaArchiveProje.Models.Review>)ViewBag.LatestReviews)
+        {
+            <li class="list-group-item">
+                <strong>@review.Movie?.Title</strong>:
+                @review.Content?.Substring(0, Math.Min(review.Content.Length, 100))...
+                <span class="text-muted">(@review.DatePosted.ToShortDateString())</span>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Henüz yorum yapılmamış.</p>
+}
+
+<hr />
+
+<!-- Views/Home/Index.cshtml -->
+<h3>İstatistikler</h3>
+<div class="row text-center">
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.MovieCount</h5>
+            <p>Film</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.DirectorCount</h5>
+            <p>Yönetmen</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.ActorCount</h5>
+            <p>Oyuncu</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.ReviewCount</h5>
+            <p>Yorum</p>
+        </div>
     </div>
 </div>
+

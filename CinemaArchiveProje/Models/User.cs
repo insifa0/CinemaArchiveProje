@@ -17,13 +17,13 @@ namespace CinemaArchiveProje.Models
         [StringLength(100)]
         public string? Email { get; set; }
 
+        [Required]
+        public string Role { get; set; } = "User"; // veya "Admin"
+
         public DateTime DateJoined { get; set; } // Kullanıcının katılma tarihi
 
         // Kullanıcının yorumları (1 kullanıcının birden fazla yorumu olabilir)
         public List<Review>? Reviews { get; set; }
-
-        [Required]
-        public string Role { get; set; } = "User"; // veya "Admin"
 
     }
 }

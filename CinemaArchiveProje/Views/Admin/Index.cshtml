@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Admin Paneli";
+}
+
+<h2>Admin Paneline Hoş Geldiniz</h2>
+
+<div class="row text-center mt-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.MovieCount</h5>
+            <p>Filmler</p>
+            <a class="btn btn-primary" asp-controller="Movies" asp-action="Index">Yönet</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.DirectorCount</h5>
+            <p>Yönetmenler</p>
+            <a class="btn btn-primary" asp-controller="Director" asp-action="Index">Yönet</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.ActorCount</h5>
+            <p>Oyuncular</p>
+            <a class="btn btn-primary" asp-controller="Actor" asp-action="Index">Yönet</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.ReviewCount</h5>
+            <p>Yorumlar</p>
+            <a class="btn btn-primary" asp-controller="Reviews" asp-action="Index">Yönet</a>
+        </div>
+    </div>
+</div>
+
+<div class="row text-center mt-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.UserCount</h5>
+            <p>Kullanıcılar</p>
+            <a class="btn btn-primary" asp-controller="Account" asp-action="UserList">Yönet</a>
+        </div>
+    </div>
+</div>
