@@ -33,6 +33,7 @@
             <a class="btn btn-primary" asp-controller="Review" asp-action="Index">Yönet</a>
         </div>
     </div>
+
 </div>
 
 <div class="row text-center mt-4">
@@ -41,6 +42,13 @@
             <h5>@ViewBag.UserCount</h5>
             <p>Kullanıcılar</p>
             <a class="btn btn-primary" asp-controller="Account" asp-action="UserList">Yönet</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.GenresCount</h5>
+            <p>Genres</p>
+            <a class="btn btn-primary" asp-controller="Genres" asp-action="Index">Yönet</a>
         </div>
     </div>
 </div>

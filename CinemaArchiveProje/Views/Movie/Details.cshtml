@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Film Detayları";
+    //Aşağıdaki kod kullanıcının Admin olup olmadığını kontrol etmek için var
+    var isAdmin = ViewBag.IsAdmin as bool? ?? false;
 }
 
 <h2>@Model.Title</h2>
@@ -25,7 +27,63 @@
 
 @if (!string.IsNullOrEmpty(Model.PosterUrl))
 {
-    <img src="@Model.PosterUrl" alt="@Model.Title Poster" class="img-fluid" />
+    <div class="mb-3">
+        <img src="@Model.PosterUrl" alt="@Model.Title Poster" class="img-thumbnail" style="max-height: 400px;" />
+    </div>
 }
 
-<a asp-action="Index" class="btn btn-secondary">Geri</a>
+<h4>Yorum Ekle</h4>
+
+<form asp-action="AddReview" method="post">
+    <input type="hidden" name="MovieId" value="@Model.Id" />
+
+    <div class="form-group">
+        <label for="Content">Yorum</label>
+        <textarea name="Content" class="form-control" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Rating">Puan (1-5)</label>
+        <input type="number" name="Rating" class="form-control" min="1" max="5" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Gönder</button>
+</form>
+
+
+<h3>Kullanıcı Yorumları</h3>
+
+@if (ViewBag.Reviews != null && ((List<Review>)ViewBag.Reviews).Count > 0)
+{
+    <ul class="list-group">
+        @foreach (var review in (List<Review>)ViewBag.Reviews)
+        {
+            <li class="list-group-item">
+                <strong>@review.User?.Username</strong> tarafından —
+                <strong>Puan:</strong> @review.Rating / 5 <br />
+                <p>@review.Content</p>
+                <small class="text-muted">@review.DatePosted.ToString("g")</small>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Bu filme henüz yorum yapılmamış.</p>
+}
+
+
+
+
+<!-- Eğer kullanıcı admin değilse butonlara erişemez-->
+@if(isAdmin){
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Düzenle</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Sil</a>
+        <a asp-action="Index" class="btn btn-secondary">Geri</a>
+    </div>
+}
+
+
+
+

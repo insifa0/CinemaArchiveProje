@@ -1,5 +1,125 @@
 ﻿@model IEnumerable<CinemaArchiveProje.Models.Movie>
 
+<style>
+    /* Genel Sayfa Stilleri */
+    body {
+        background-color: #eef2f7; /* Daha açık, ferah bir mavi-gri arka plan */
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Modern sistem fontları */
+        color: #343a40; /* Koyu gri ana metin rengi */
+        padding-top: 20px; /* Sayfanın üstüne ve altına biraz boşluk */
+        padding-bottom: 40px;
+    }
+
+    /* Ana Başlıklar (H1, H3) */
+    h1, h3 {
+        color: #0056b3; /* Daha canlı bir mavi başlık rengi */
+        margin-bottom: 1.5rem; /* Alt boşluk */
+        padding-bottom: 0.5rem; /* Altına padding */
+        border-bottom: 1px solid #cce5ff; /* Başlık altına açık mavi çizgi */
+    }
+
+    /* Arama Formu (Mevcut class'lar üzerinden) */
+    form.form-inline.mb-3 .form-control {
+        border-radius: 1.5rem; /* Daha yuvarlak kenarlar */
+        border-color: #9fcdff; /* Açık mavi kenarlık */
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075); /* İç gölge efekti */
+    }
+
+    form.form-inline.mb-3 .btn-primary {
+        border-radius: 1.5rem; /* Daha yuvarlak kenarlar */
+        background-color: #007bff; /* Bootstrap varsayılan mavi */
+        border-color: #007bff; /* Bootstrap varsayılan mavi */
+        transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        form.form-inline.mb-3 .btn-primary:hover {
+            background-color: #0056b3; /* Hover'da daha koyu mavi */
+            border-color: #004085;
+        }
+
+    form.form-inline.mb-3 .form-control:focus {
+        border-color: #4dabf7; /* Odak rengi */
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Odak efekti */
+    }
+
+
+    /* Film ve Yorum Listesi Öğeleri */
+    .list-group-item {
+        background-color: #ffffff; /* Beyaz arka plan */
+        border: 1px solid rgba(0, 0, 0, 0.1); /* Yumuşak gri kenarlık */
+        border-radius: 0.5rem; /* Hafif yuvarlak köşe */
+        margin-bottom: 0.8rem; /* Öğeler arası dikey boşluk */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); /* Hafif gölge */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Yumuşak geçiş */
+        padding: 1.2rem 1.5rem; /* İç boşluk */
+    }
+
+        .list-group-item:hover {
+            transform: translateY(-3px); /* Üzerine gelince hafif kalkma */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12); /* Biraz daha belirgin gölge */
+            z-index: 1; /* Diğerlerinin üzerine çıkması için */
+            position: relative; /* z-index için gerekli */
+            border-color: #b8daff; /* Hover'da açık mavi kenarlık */
+        }
+
+        /* Film listesi içindeki etiketler (Name:, Date: vs.) */
+        .list-group-item p strong {
+            color: #0056b3; /* Etiket rengini başlık rengiyle aynı yap */
+            font-weight: 700; /* Daha kalın */
+        }
+
+    /* İstatistik Kartları */
+    .row.text-center .col-md-3 .card {
+        border: none; /* Bootstrap kenarlığını kaldır */
+        border-radius: 0.75rem; /* Daha yuvarlak köşeler */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        background-color: #e9f2ff; /* Çok açık mavi kart arka planı */
+        /* shadow-sm class'ı zaten var, onu kullanıyoruz */
+    }
+
+        .row.text-center .col-md-3 .card:hover {
+            transform: translateY(-5px); /* Daha belirgin kalkma */
+            box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.18) !important; /* Bootstrap gölgesini ezen daha güçlü hover gölgesi */
+            background-color: #d4e6ff; /* Hover'da biraz daha koyu açık mavi */
+        }
+
+        /* İstatistik Kart İçeriği (Sayı ve Metin) */
+        .row.text-center .col-md-3 .card h5 {
+            font-size: 2.5rem; /* Sayı boyutu büyüt */
+            font-weight: 700;
+            color: #007bff; /* Mavi renk */
+            margin-bottom: 0.2rem;
+        }
+
+        .row.text-center .col-md-3 .card p {
+            font-size: 1rem; /* Etiket boyutu büyüt */
+            color: #5a6268; /* Koyu gri etiket rengi */
+            margin-bottom: 0;
+        }
+
+    /* Yatay Çizgiler */
+    hr {
+        margin-top: 2.5rem; /* Üst boşluk */
+        margin-bottom: 2.5rem; /* Alt boşluk */
+        border: 0;
+        border-top: 1px solid #b8daff; /* Açık mavi çizgi */
+    }
+
+    /* "Henüz film/yorum eklenmemiş" gibi mesajlar */
+    h3 + p {
+        color: #004085; /* Koyu mavi metin rengi */
+        font-style: normal; /* Eğik yazıyı kaldır */
+        padding: 15px 20px; /* İç boşluk */
+        background-color: #cce5ff; /* Açık mavi arka plan */
+        border: 1px solid #b8daff; /* Açık mavi kenarlık */
+        border-radius: 0.5rem; /* Yuvarlak köşeler */
+        display: inline-block; /* Sadece metin kadar yer kaplasın */
+        margin-top: 1rem; /* Başlıktan sonra boşluk */
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* Hafif gölge */
+    }
+</style>
+
+
 @{
     ViewData["Title"] = "Ana Sayfa";
 }
@@ -16,6 +136,12 @@ else
 }
 
 <h3>Son Eklenen Filmler</h3>
+<div>
+    <form asp-action="Index" method="get" class="form-inline mb-3">
+        <input type="text" name="searchString" value="@Context.Request.Query["searchString"]" class="form-control mr-2" placeholder="Film adı ara..." />
+        <button type="submit" class="btn btn-primary">Ara</button>
+    </form>
+</div>
 
 @if (Model == null || !Model.Any())
 {
@@ -26,17 +152,25 @@ else
     <ul class="list-group">
         @foreach (var movie in Model)
         {
-            <li class="list-group-item">
-                <p> Name: <strong>@movie.Title</strong>
-                    Date:  <strong>@movie.ReleaseDate.ToShortDateString()</strong>
-                    Country: @movie.Country
-                    Genre: @movie.Genre
-                    Description: @movie.Description
-                    Director: @movie.Director
-                </p>  
+            <li class="list-group-item p-0 border-0">
+                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="text-decoration-none text-dark">
+                    <div class="p-3 hover-shadow" style="cursor: pointer;">
+                        <strong>@movie.Title</strong>
+                        <br />
+                        <small>
+                            Yayın Tarihi: @movie.ReleaseDate.ToShortDateString() |
+                            Ülke: @movie.Country?.Name |
+                            Tür: @movie.Genre?.Name |
+                            Yönetmen: @movie.Director?.Name
+                        </small>
+                        <p class="mb-0">@movie.Description?.Substring(0, Math.Min(movie.Description.Length, 100))...</p>
+                    </div>
+                </a>
             </li>
         }
     </ul>
+
+
 }
 
 <hr />

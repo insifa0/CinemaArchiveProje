@@ -17,5 +17,9 @@ namespace CinemaArchiveProje.Models
         public int Rating { get; set; } // Yorum puanı (1-5 arası)
 
         public DateTime DatePosted { get; set; }
+
+        // Yorum yapan kullanıcı
+        public int UserId { get; set; }             // Foreign key
+        public User? User { get; set; }             // Navigation property
     }
 }

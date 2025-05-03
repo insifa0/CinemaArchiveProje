@@ -22,6 +22,7 @@ namespace CinemaArchiveProje.Controllers
             ViewBag.ActorCount = await _context.Actors.CountAsync();
             ViewBag.ReviewCount = await _context.Reviews.CountAsync();
             ViewBag.UserCount = await _context.Users.CountAsync();
+            ViewBag.GenresCount = await _context.Genres.CountAsync();
 
             return View();
         }

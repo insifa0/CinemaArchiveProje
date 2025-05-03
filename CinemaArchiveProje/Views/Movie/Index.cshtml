@@ -13,6 +13,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Poster</th>
             <th>Başlık</th>
             <th>Yönetmen</th>
             <th>Tür</th>
@@ -24,6 +25,12 @@
         @foreach (var movie in Model)
         {
             <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(movie.PosterUrl))
+                    {
+                        <img src="@movie.PosterUrl" alt="@movie.Title" style="height: 60px;" />
+                    }
+                </td>
                 <td>@movie.Title</td>
                 <td>@movie.Director?.Name</td>
                 <td>@movie.Genre?.Name</td>

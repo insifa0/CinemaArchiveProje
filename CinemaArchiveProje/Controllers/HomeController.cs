@@ -14,11 +14,22 @@ namespace CinemaArchiveProje.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var latestMovies = await _context.Movies
+            var moviesQuery = _context.Movies
+                .Include(m => m.Director)
+                .Include(m => m.Genre)
+                .Include(m => m.Country)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                moviesQuery = moviesQuery.Where(m => m.Title.Contains(searchString));
+            }
+
+            var latestMovies = await moviesQuery
                 .OrderByDescending(m => m.ReleaseDate)
-                .Take(5)
+                .Take(5) // Arama yoksa son 5 film, arama varsa yine kısıtlama uygulanabilir ya da kaldırılabilir
                 .ToListAsync();
 
             var latestReviews = await _context.Reviews
@@ -35,8 +46,9 @@ namespace CinemaArchiveProje.Controllers
 
             ViewBag.LatestReviews = latestReviews;
 
-            return View(latestMovies); // Model olarak son filmler gönderiliyor
+            return View(latestMovies);
         }
+
 
 
         public IActionResult Privacy()
