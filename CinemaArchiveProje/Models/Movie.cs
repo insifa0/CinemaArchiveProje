@@ -29,6 +29,8 @@ namespace CinemaArchiveProje.Models
         public List<Review>? Reviews { get; set; }
 
         public string? PosterUrl { get; set; }
+        public string? TrailerUrl { get; set; } // YouTube embed linki olacak
+
 
     }
 }

@@ -1,18 +1,17 @@
-﻿@model CinemaArchiveProje.Models.Actor
+﻿@model CinemaArchiveProje.Models.Country
 
 @{
-    ViewData["Title"] = "Aktörü Sil";
+    ViewData["Title"] = "Ülke Sil";
     Layout = "_AdminLayout";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<h4>Aktörü silmek istediğinize emin misiniz?</h4>
+<h4>Bu ülkeyi silmek istediğinize emin misiniz?</h4>
 <hr />
 
 <div>
     <h4>@Model.Name</h4>
-    <p>@Model.Biography</p>
 </div>
 
 <form asp-action="Delete" method="post">
@@ -20,11 +19,3 @@
     <button type="submit" class="btn btn-danger">Sil</button>
     <a asp-action="Index" class="btn btn-secondary">İptal</a>
 </form>
-
-<div>
-    <a href="@Url.Action("Index")">Geri Dön</a>
-</div>
-
-
-
-

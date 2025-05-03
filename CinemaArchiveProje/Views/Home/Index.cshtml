@@ -122,6 +122,7 @@
 
 @{
     ViewData["Title"] = "Ana Sayfa";
+    var isAdmin = ViewBag.IsAdmin as bool? ?? false;
 }
 
 <h1>Hoş geldiniz!</h1>
@@ -136,16 +137,45 @@ else
 }
 
 <h3>Son Eklenen Filmler</h3>
-<div>
-    <form asp-action="Index" method="get" class="form-inline mb-3">
-        <input type="text" name="searchString" value="@Context.Request.Query["searchString"]" class="form-control mr-2" placeholder="Film adı ara..." />
-        <button type="submit" class="btn btn-primary">Ara</button>
-    </form>
-</div>
+<form asp-action="Index" method="get" class="mb-4 row g-2">
+    <div class="col-md-3">
+        <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control" placeholder="Film adı ara..." />
+    </div>
+    <div class="col-md-2">
+        <select name="genreId" class="form-select">
+            <option value="">Tür seç</option>
+            @foreach (var genre in (SelectList)ViewBag.Genres)
+            {
+                <option value="@genre.Value" selected="@(genre.Selected ? "selected" : null)">@genre.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="directorId" class="form-select">
+            <option value="">Yönetmen seç</option>
+            @foreach (var director in (SelectList)ViewBag.Directors)
+            {
+                <option value="@director.Value" selected="@(director.Selected ? "selected" : null)">@director.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="countryId" class="form-select">
+            <option value="">Ülke seç</option>
+            @foreach (var country in (SelectList)ViewBag.Countries)
+            {
+                <option value="@country.Value" selected="@(country.Selected ? "selected" : null)">@country.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+    </div>
+</form>
 
 @if (Model == null || !Model.Any())
 {
-    <p>Henüz film eklenmemiş.</p>
+    <div class="alert alert-info">Film bulunamadı.</div>
 }
 else
 {
@@ -163,15 +193,16 @@ else
                             Tür: @movie.Genre?.Name |
                             Yönetmen: @movie.Director?.Name
                         </small>
-                        <p class="mb-0">@movie.Description?.Substring(0, Math.Min(movie.Description.Length, 100))...</p>
+                        <p class="mb-0">
+                            @(movie.Description?.Length > 100 ? movie.Description.Substring(0, 100) + "..." : movie.Description)
+                        </p>
                     </div>
                 </a>
             </li>
         }
     </ul>
-
-
 }
+
 
 <hr />
 

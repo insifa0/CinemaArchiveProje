@@ -15,14 +15,44 @@ namespace CinemaArchiveProje.Controllers
         }
 
         // Index - Yorumları listele
-        public async Task<IActionResult> Index(int movieId)
+        public async Task<IActionResult> Index(int? movieId)
         {
-            var reviews = await _context.Reviews
-                                        .Where(r => r.MovieId == movieId)
-                                        .Include(r => r.Movie)
-                                        .ToListAsync();
+            List<Review> reviews;
+
+            if (movieId == null)
+            {
+                // Tüm yorumları getir
+                reviews = await _context.Reviews
+                    .Include(r => r.Movie)
+                    .OrderByDescending(r => r.DatePosted)
+                    .ToListAsync();
+
+                ViewData["MovieTitle"] = null;
+                ViewData["MovieId"] = null;
+            }
+            else
+            {
+                // Belirli filme ait yorumları getir
+                var movie = await _context.Movies
+                    .Include(m => m.Reviews)
+                    .FirstOrDefaultAsync(m => m.Id == movieId);
+
+                if (movie == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["MovieTitle"] = movie.Title;
+                ViewData["MovieId"] = movieId;
+
+                reviews = movie.Reviews
+                    .OrderByDescending(r => r.DatePosted)
+                    .ToList();
+            }
+
             return View(reviews);
         }
+
 
         // Create - Yeni yorum ekle
         public IActionResult Create(int movieId)
@@ -79,24 +109,31 @@ namespace CinemaArchiveProje.Controllers
             {
                 try
                 {
-                    _context.Update(review);
+                    // Mevcut review verisini çekiyoruz
+                    var existingReview = await _context.Reviews.FindAsync(id);
+                    if (existingReview == null)
+                        return NotFound();
+
+                    // Sadece değiştirilebilir alanları güncelliyoruz
+                    existingReview.Content = review.Content;
+                    existingReview.Rating = review.Rating;
+                    existingReview.DatePosted = DateTime.Now; // İstersen güncellenmesin
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ReviewExists(review.Id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
+
                 return RedirectToAction(nameof(Index), new { movieId = review.MovieId });
             }
             return View(review);
         }
+
 
         // Delete - Yorum sil
         public async Task<IActionResult> Delete(int? id)
@@ -123,13 +160,18 @@ namespace CinemaArchiveProje.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var review = await _context.Reviews.FindAsync(id);
+            int? movieId = null;
+
             if (review != null)
             {
+                movieId = review.MovieId;
                 _context.Reviews.Remove(review);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index), new { movieId = review.MovieId });
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         private bool ReviewExists(int id)
         {

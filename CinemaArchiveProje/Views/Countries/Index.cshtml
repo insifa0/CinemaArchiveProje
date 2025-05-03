@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CinemaArchiveProje.Models.Country>
+
+@{
+    ViewData["Title"] = "Ülkeler";
+    Layout = "_AdminLayout";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Yeni Ülke Ekle</a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Henüz ülke eklenmemiş.</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ülke Adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var country in Model)
+            {
+                <tr>
+                    <td>@country.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@country.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                        <a asp-action="Delete" asp-route-id="@country.Id" class="btn btn-danger btn-sm">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

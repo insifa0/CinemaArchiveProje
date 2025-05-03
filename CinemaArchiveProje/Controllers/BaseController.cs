@@ -1,5 +1,6 @@
-﻿using CinemaArchiveProje.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using CinemaArchiveProje.Data;
 
 public class BaseController : Controller
 {
@@ -14,5 +15,11 @@ public class BaseController : Controller
     {
         var role = HttpContext.Session.GetString("Role");
         return role == "Admin";
+    }
+
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        base.OnActionExecuting(context);
+        ViewBag.IsAdmin = IsAdmin();  // Tüm View'lara aktar
     }
 }

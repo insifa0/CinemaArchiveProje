@@ -17,6 +17,12 @@ namespace CinemaArchiveProje.Controllers
         // Index - Aktörleri listele
         public async Task<IActionResult> Index()
         {
+            // Admin misin diye kontrol ediyorum burada
+            var role = HttpContext.Session.GetString("Role");
+            if (role != "Admin")
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
             return View(await _context.Actors.ToListAsync());
         }
 

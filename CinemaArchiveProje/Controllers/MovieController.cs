@@ -112,6 +112,7 @@ namespace CinemaArchiveProje.Controllers
                 existingMovie.DirectorId = movie.DirectorId;
                 existingMovie.GenreId = movie.GenreId;
                 existingMovie.CountryId = movie.CountryId;
+                existingMovie.TrailerUrl = movie.TrailerUrl; // 👈 Yeni alan eklendi
 
                 if (posterFile != null && posterFile.Length > 0)
                 {
@@ -137,6 +138,7 @@ namespace CinemaArchiveProje.Controllers
 
             return View(movie);
         }
+
 
 
 

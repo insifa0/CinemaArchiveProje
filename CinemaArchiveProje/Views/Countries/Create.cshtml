@@ -1,0 +1,19 @@
+﻿@model CinemaArchiveProje.Models.Country
+
+@{
+    ViewData["Title"] = "Yeni Ülke Ekle";
+    Layout = "_AdminLayout";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Name">Ülke Adı</label>
+        <input type="text" asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

@@ -1,36 +1,60 @@
 ﻿@model IEnumerable<CinemaArchiveProje.Models.Review>
-
 @{
     ViewData["Title"] = "Yorumlar";
+    var movieTitle = ViewData["MovieTitle"] as string;
+    var movieId = ViewData["MovieId"];
+    Layout = "_AdminLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Yorum</th>
-            <th>Puan</th>
-            <th>Tarih</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var review in Model)
-        {
-            <tr>
-                <td>@review.Content</td>
-                <td>@review.Rating</td>
-                <td>@review.DatePosted.ToString("dd MMM yyyy")</td>
-                <td>
-                    <a href="@Url.Action("Edit", new { id = review.Id })">Düzenle</a> |
-                    <a href="@Url.Action("Delete", new { id = review.Id })">Sil</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h2>
+    @if (movieTitle != null)
+    {
+        @: "@movieTitle" filmi için yorumlar
+    }
+    else
+    {
+        @: Tüm Yorumlar
+    }
+</h2>
 
 <p>
-    <a href="@Url.Action("Create", new { movieId = ViewData["MovieId"] })" class="btn btn-primary">Yeni Yorum Ekle</a>
+    @if (movieId != null)
+    {
+        <a asp-controller="Movie" asp-action="Details" asp-route-id="@movieId" class="btn btn-secondary">Film Detayına Dön</a>
+        <a asp-action="Index" class="btn btn-info">Tüm Yorumlara Dön</a>
+    }
 </p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Yorum bulunamadı.</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Film</th>
+                <th>Yorum</th>
+                <th>Puan</th>
+                <th>Tarih</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td>@review.Movie?.Title</td>
+                    <td>@review.Content</td>
+                    <td>@review.Rating</td>
+                    <td>@review.DatePosted.ToString("dd MMM yyyy")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@review.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                        <a asp-action="Delete" asp-route-id="@review.Id" class="btn btn-sm btn-danger">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

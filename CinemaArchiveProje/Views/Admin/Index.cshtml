@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Admin Paneli";
+    Layout = "_AdminLayout";
 }
+
 
 <h2>Admin Paneline Hoş Geldiniz</h2>
 
@@ -49,6 +51,13 @@
             <h5>@ViewBag.GenresCount</h5>
             <p>Genres</p>
             <a class="btn btn-primary" asp-controller="Genres" asp-action="Index">Yönet</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h5>@ViewBag.CountriesCount</h5>
+            <p>Countries</p>
+            <a class="btn btn-primary" asp-controller="Countries" asp-action="Index">Yönet</a>
         </div>
     </div>
 </div>
