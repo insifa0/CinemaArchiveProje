@@ -36,6 +36,8 @@ app.UseSession();
 
 app.UseAuthorization();
 
+app.UseStatusCodePagesWithReExecute("/Home/Error404");
+
 // Default route
 app.MapControllerRoute(
     name: "default",

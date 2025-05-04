@@ -184,18 +184,20 @@ else
         {
             <li class="list-group-item p-0 border-0">
                 <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="text-decoration-none text-dark">
-                    <div class="p-3 hover-shadow" style="cursor: pointer;">
-                        <strong>@movie.Title</strong>
-                        <br />
-                        <small>
-                            Yayın Tarihi: @movie.ReleaseDate.ToShortDateString() |
-                            Ülke: @movie.Country?.Name |
-                            Tür: @movie.Genre?.Name |
-                            Yönetmen: @movie.Director?.Name
-                        </small>
-                        <p class="mb-0">
-                            @(movie.Description?.Length > 100 ? movie.Description.Substring(0, 100) + "..." : movie.Description)
-                        </p>
+                    <div class="d-flex align-items-start p-3 hover-shadow" style="cursor: pointer;">
+                        <img src="@movie.PosterUrl" alt="@movie.Title" class="me-3 rounded" style="width: 100px; height: 150px; object-fit: cover;" />
+                        <div>
+                            <strong>@movie.Title</strong><br />
+                            <small>
+                                Yayın Tarihi: @movie.ReleaseDate.ToShortDateString() |
+                                Ülke: @movie.Country?.Name |
+                                Tür: @movie.Genre?.Name |
+                                Yönetmen: @movie.Director?.Name
+                            </small>
+                            <p class="mb-0">
+                                @(movie.Description?.Length > 100 ? movie.Description.Substring(0, 100) + "..." : movie.Description)
+                            </p>
+                        </div>
                     </div>
                 </a>
             </li>

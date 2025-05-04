@@ -58,5 +58,11 @@ namespace CinemaArchiveProje.Controllers
         {
             return View();
         }
+
+        public IActionResult Error404()
+        {
+            return View("NotFound");
+        }
+
     }
 }
