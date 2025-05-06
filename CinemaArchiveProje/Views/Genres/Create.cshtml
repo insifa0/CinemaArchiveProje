@@ -5,19 +5,29 @@
     Layout = "_AdminLayout";
 }
 
-<h1>Create Genre</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="mb-4 text-center">@ViewData["Title"]</h1>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+            <form asp-action="Create" method="post">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Genre Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter genre name..." />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-</form>
+</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

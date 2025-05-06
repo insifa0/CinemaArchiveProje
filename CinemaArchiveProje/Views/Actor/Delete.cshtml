@@ -5,26 +5,77 @@
     Layout = "_AdminLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .delete-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-<h4>Aktörü silmek istediğinize emin misiniz?</h4>
-<hr />
+        .delete-container h1 {
+            color: #800000;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-<div>
-    <h4>@Model.Name</h4>
-    <p>@Model.Biography</p>
+        .delete-container h4 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #444;
+        }
+
+    .actor-details {
+        margin-bottom: 25px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+        .actor-details h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .btn {
+        min-width: 100px;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
+
+<div class="delete-container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h4>Aktörü silmek istediğinize emin misiniz?</h4>
+    <hr />
+
+    <div class="actor-details">
+        <h4>@Model.Name</h4>
+        <p>@Model.Biography</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">Sil</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+        </div>
+    </form>
+
+    <div class="back-link">
+        <a href="@Url.Action("Index")">← Geri Dön</a>
+    </div>
 </div>
-
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Sil</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>
-
-<div>
-    <a href="@Url.Action("Index")">Geri Dön</a>
-</div>
-
-
-
-

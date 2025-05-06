@@ -5,20 +5,90 @@
     Layout = "_AdminLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .delete-director-container {
+        max-width: 700px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-<h4>Yönetmeni silmek istediğinize emin misiniz?</h4>
-<hr />
+    h1 {
+        color: #800000;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-<div>
-    <h4>@Model.Name</h4>
-    <p>@Model.Biography</p>
+    h4 {
+        text-align: center;
+        color: #444;
+        margin-bottom: 25px;
+    }
+
+    .director-info {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+    }
+
+        .director-info h4 {
+            color: #004080;
+            margin-bottom: 10px;
+        }
+
+        .director-info p {
+            color: #333;
+            font-size: 16px;
+        }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+        .form-actions button {
+            min-width: 100px;
+        }
+
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="delete-director-container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h4>Yönetmeni silmek istediğinize emin misiniz?</h4>
+    <hr />
+
+    <div class="director-info">
+        <h4>@Model.Name</h4>
+        <p>@Model.Biography</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">Sil</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+        </div>
+    </form>
+
+    <div class="back-link">
+        <a href="@Url.Action("Index")">← Yönetmenler Listesine Geri Dön</a>
+    </div>
 </div>
 
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Sil</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>
-
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

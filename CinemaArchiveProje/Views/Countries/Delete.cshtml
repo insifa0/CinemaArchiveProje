@@ -5,17 +5,72 @@
     Layout = "_AdminLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .delete-country-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-<h4>Bu ülkeyi silmek istediğinize emin misiniz?</h4>
-<hr />
+    h1 {
+        color: #004080;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-<div>
-    <h4>@Model.Name</h4>
+    h4 {
+        text-align: center;
+        color: #444;
+        margin-bottom: 25px;
+    }
+
+    .country-details {
+        margin-bottom: 0px;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .btn {
+        min-width: 100px;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
+
+<div class="delete-country-container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h4>Bu ülkeyi silmek istediğinize emin misiniz?</h4>
+    <hr />
+
+    <div class="country-details">
+        <h4>@Model.Name</h4>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">Sil</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+        </div>
+    </form>
+
+    <div class="back-link">
+        <a href="@Url.Action("Index")">← Geri Dön</a>
+    </div>
 </div>
-
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Sil</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>

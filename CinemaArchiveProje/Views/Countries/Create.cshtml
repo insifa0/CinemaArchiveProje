@@ -5,15 +5,71 @@
     Layout = "_AdminLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .create-country-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="Name">Ülke Adı</label>
-        <input type="text" asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+    h1 {
+        color: #004080;
+        text-align: center;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group input {
+        margin-top: 10px;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
+
+<div class="create-country-container">
+    <h1>@ViewData["Title"]</h1>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Name">Ülke Adı</label>
+            <input type="text" asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+        </div>
+    </form>
+
+    <div class="back-link">
+        <a href="@Url.Action("Index")">← Geri Dön</a>
     </div>
+</div>
 
-    <button type="submit" class="btn btn-primary">Kaydet</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -5,27 +5,34 @@
     Layout = "_AdminLayout";
 }
 
-<h2>Filmi Sil</h2>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">Filmi Sil</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="text-danger">Film Adı: @Model.Title</h5>
+            <p class="mb-3">Bu filmi silmek istediğinize emin misiniz?</p>
+            <dl class="row">
+                <dt class="col-sm-3">🎬 Açıklama</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
 
-<h4>@Model.Title</h4>
-<p>Bu filmi silmek istediğinize emin misiniz?</p>
+                <dt class="col-sm-3">🎥 Yönetmen</dt>
+                <dd class="col-sm-9">@Model.Director?.Name</dd>
 
-<dl class="row">
-    <dt class="col-sm-2">Açıklama</dt>
-    <dd class="col-sm-10">@Model.Description</dd>
+                <dt class="col-sm-3">🎭 Tür</dt>
+                <dd class="col-sm-9">@Model.Genre?.Name</dd>
 
-    <dt class="col-sm-2">Yönetmen</dt>
-    <dd class="col-sm-10">@Model.Director?.Name</dd>
-
-    <dt class="col-sm-2">Tür</dt>
-    <dd class="col-sm-10">@Model.Genre?.Name</dd>
-
-    <dt class="col-sm-2">Ülke</dt>
-    <dd class="col-sm-10">@Model.Country?.Name</dd>
-</dl>
-
-<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Sil</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>
+                <dt class="col-sm-3">🌍 Ülke</dt>
+                <dd class="col-sm-9">@Model.Country?.Name</dd>
+            </dl>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="mb-0">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">🗑️ Sil</button>
+            </form>
+            <a asp-action="Index" class="btn btn-secondary">↩️ İptal</a>
+        </div>
+    </div>
+</div>

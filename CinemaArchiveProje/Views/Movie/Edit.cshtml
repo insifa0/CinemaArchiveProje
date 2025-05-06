@@ -5,60 +5,74 @@
     Layout = "_AdminLayout";
 }
 
-<h2>Film Düzenle</h2>
+<div class="container">
+    <h2 class="mb-4">🎞️ Film Düzenle</h2>
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id" />
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="card shadow-sm p-4">
+        <input type="hidden" asp-for="Id" />
 
-    <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"><b>Film Başlığı</b></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"><b>Açıklama</b></label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="ReleaseDate"></label>
-        <input asp-for="ReleaseDate" type="date" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="ReleaseDate" class="form-label"><b>Yayın Tarihi</b></label>
+            <input asp-for="ReleaseDate" type="date" class="form-control" />
+            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="DirectorId">Yönetmen</label>
-        <select asp-for="DirectorId" class="form-control" asp-items="ViewBag.Directors"></select>
-    </div>
+        <div class="mb-3">
+            <label asp-for="DirectorId" class="form-label"><b>Yönetmen</b></label>
+            <select asp-for="DirectorId" class="form-control" asp-items="ViewBag.Directors"></select>
+            <span asp-validation-for="DirectorId" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="GenreId">Tür</label>
-        <select asp-for="GenreId" class="form-control" asp-items="ViewBag.Genres"></select>
-    </div>
+        <div class="mb-3">
+            <label asp-for="GenreId" class="form-label"><b>Tür</b></label>
+            <select asp-for="GenreId" class="form-control" asp-items="ViewBag.Genres"></select>
+            <span asp-validation-for="GenreId" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="CountryId">Ülke</label>
-        <select asp-for="CountryId" asp-items="ViewBag.Countries" class="form-control"></select>
-    </div>
+        <div class="mb-3">
+            <label asp-for="CountryId" class="form-label"><b>Ülke</b></label>
+            <select asp-for="CountryId" class="form-control" asp-items="ViewBag.Countries"></select>
+            <span asp-validation-for="CountryId" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="TrailerUrl" class="control-label">YouTube Trailer Linki (embed)</label>
-        <input asp-for="TrailerUrl" class="form-control" />
-        <span asp-validation-for="TrailerUrl" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="TrailerUrl" class="form-label"><b>YouTube Trailer Linki (embed)</b></label>
+            <input asp-for="TrailerUrl" class="form-control" />
+            <span asp-validation-for="TrailerUrl" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Mevcut Poster</label><br />
-        @if (!string.IsNullOrEmpty(Model.PosterUrl))
-        {
-            <img src="@Model.PosterUrl" alt="Poster" style="max-height: 150px;" />
-        }
-    </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Mevcut Poster</b></label><br />
+            @if (!string.IsNullOrEmpty(Model.PosterUrl))
+            {
+                <img src="@Model.PosterUrl" alt="Poster" class="img-thumbnail" style="max-height: 150px;" />
+            }
+            else
+            {
+                <p class="text-muted">Poster mevcut değil.</p>
+            }
+        </div>
 
-    <div class="form-group">
-        <label>Yeni Poster (isteğe bağlı)</label>
-        <input type="file" name="posterFile" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Yeni Poster (isteğe bağlı)</b></label>
+            <input type="file" name="posterFile" class="form-control" />
+        </div>
 
-    <button type="submit" class="btn btn-success">Kaydet</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success"><b>💾 Kaydet</b></button>
+            <a asp-action="Index" class="btn btn-secondary"><b>❌ İptal</b></a>
+        </div>
+    </form>
+</div>

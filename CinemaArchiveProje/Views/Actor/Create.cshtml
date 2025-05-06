@@ -5,27 +5,73 @@
     Layout = "_AdminLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .actor-create-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
 
-<h4>Aktör Bilgilerini Girin</h4>
-<hr />
+    h1 {
+        text-align: center;
+        color: #004080;
+        margin-bottom: 10px;
+    }
 
-<form asp-action="Create">
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Biography" class="control-label"></label>
-        <textarea asp-for="Biography" class="form-control"></textarea>
-        <span asp-validation-for="Biography" class="text-danger"></span>
-    </div>
-    <div class="form-group">
+    h4 {
+        text-align: center;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="actor-create-container">
+    <h1>@ViewData["Title"]</h1>
+    <h4>Aktör Bilgilerini Girin</h4>
+    <hr />
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-4">
+            <label asp-for="Biography" class="control-label"></label>
+            <textarea asp-for="Biography" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Biography" class="text-danger"></span>
+        </div>
+
         <button type="submit" class="btn btn-primary">Kaydet</button>
-    </div>
-</form>
+    </form>
 
-<div>
-    <a href="@Url.Action("Index")">Geri Dön</a>
+    <div>
+        <a href="@Url.Action("Index")" class="text-decoration-none">← Geri Dön</a>
+    </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

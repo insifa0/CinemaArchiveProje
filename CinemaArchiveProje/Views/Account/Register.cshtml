@@ -4,16 +4,61 @@
     ViewData["Title"] = "Kayıt Ol";
 }
 
-<h2>Kayıt Ol</h2>
+<style>
+    .register-container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+    }
 
-<form asp-action="Register" method="post">
-    <div class="form-group">
-        <label asp-for="Username"></label>
-        <input asp-for="Username" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-success">Kayıt Ol</button>
-</form>
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #004080;
+    }
+
+    .btn-success {
+        width: 100%;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .validation-summary-errors {
+        color: red;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="register-container">
+    <h2>Kayıt Ol</h2>
+
+    <form asp-action="Register" method="post">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Kayıt Ol</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

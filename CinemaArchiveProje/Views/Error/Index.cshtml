@@ -1,16 +1,53 @@
 ﻿@model CinemaArchiveProje.Models.ErrorViewModel
 
-<h2>An Error Occurred</h2>
+@{
+    ViewData["Title"] = "Hata Oluştu";
+    Layout = "_Layout";
+}
 
-@if (Model.ShowRequestId)
-{
-    <div>
-        <h4>Request ID: @Model.RequestId</h4>
-    </div>
-}
-else
-{
-    <div>
-        <p>Sorry, an unexpected error has occurred. Please try again later.</p>
-    </div>
-}
+<style>
+    .error-container {
+        max-width: 600px;
+        margin: 100px auto;
+        text-align: center;
+        padding: 30px;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+        color: #721c24;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .error-container h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .error-container h4 {
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        .error-container p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+</style>
+
+<div class="error-container">
+    <h2>Bir Hata Oluştu</h2>
+
+    @if (Model.ShowRequestId)
+    {
+        <div>
+            <h4>İstek Kodu: @Model.RequestId</h4>
+            <p>Üzgünüz, beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
+        </div>
+    }
+    else
+    {
+        <div>
+            <p>Üzgünüz, beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
+        </div>
+    }
+</div>

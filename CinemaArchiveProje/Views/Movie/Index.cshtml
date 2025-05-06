@@ -5,43 +5,36 @@
     Layout = "_AdminLayout";
 }
 
-<h1>Film Listesi</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="Create" class="btn btn-success">Yeni Film Ekle</a>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Yeni Film Ekle</a>
-</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Poster</th>
-            <th>Başlık</th>
-            <th>Yönetmen</th>
-            <th>Tür</th>
-            <th>Ülke</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-2">
         @foreach (var movie in Model)
         {
-            <tr>
-                <td>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
                     @if (!string.IsNullOrEmpty(movie.PosterUrl))
                     {
-                        <img src="@movie.PosterUrl" alt="@movie.Title" style="height: 60px;" />
+                        <img src="@movie.PosterUrl" class="card-img-top" alt="@movie.Title" style="height: 300px; object-fit: cover;" />
                     }
-                </td>
-                <td>@movie.Title</td>
-                <td>@movie.Director?.Name</td>
-                <td>@movie.Genre?.Name</td>
-                <td>@movie.Country?.Name</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info btn-sm">Detay</a>
-                    <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-primary">Düzenle</a>
-                    <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger">Sil</a>
-                </td>
-            </tr>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@movie.Title</h5>
+                        <p class="card-text">
+                            <strong>Yönetmen:</strong> @movie.Director?.Name<br />
+                            <strong>Tür:</strong> @movie.Genre?.Name<br />
+                            <strong>Ülke:</strong> @movie.Country?.Name
+                        </p>
+                        <div class="mt-auto d-flex justify-content-between gap-2">
+                            <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-outline-info btn-sm w-100">Detay</a>
+                            <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-outline-primary btn-sm w-100">Düzenle</a>
+                            <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-outline-danger btn-sm w-100">Sil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
