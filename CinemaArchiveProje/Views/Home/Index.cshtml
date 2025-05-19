@@ -1,217 +1,115 @@
-﻿@model IEnumerable<CinemaArchiveProje.Models.Movie>
-
-<style>
-    /* Genel Sayfa Stilleri */
-    body {
-        background-color: #eef2f7; /* Daha açık, ferah bir mavi-gri arka plan */
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Modern sistem fontları */
-        color: #343a40; /* Koyu gri ana metin rengi */
-        padding-bottom: 40px;
-    }
-
-    /* Ana Başlıklar (H1, H3) */
-    h1, h3 {
-        color: #0056b3; /* Daha canlı bir mavi başlık rengi */
-        margin-bottom: 1.5rem; /* Alt boşluk */
-        padding-bottom: 0.5rem; /* Altına padding */
-        border-bottom: 1px solid #cce5ff; /* Başlık altına açık mavi çizgi */
-    }
-
-    /* Arama Formu (Mevcut class'lar üzerinden) */
-    form.form-inline.mb-3 .form-control {
-        border-radius: 1.5rem; /* Daha yuvarlak kenarlar */
-        border-color: #9fcdff; /* Açık mavi kenarlık */
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075); /* İç gölge efekti */
-    }
-
-    form.form-inline.mb-3 .btn-primary {
-        border-radius: 1.5rem; /* Daha yuvarlak kenarlar */
-        background-color: #007bff; /* Bootstrap varsayılan mavi */
-        border-color: #007bff; /* Bootstrap varsayılan mavi */
-        transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-
-        form.form-inline.mb-3 .btn-primary:hover {
-            background-color: #0056b3; /* Hover'da daha koyu mavi */
-            border-color: #004085;
-        }
-
-    form.form-inline.mb-3 .form-control:focus {
-        border-color: #4dabf7; /* Odak rengi */
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Odak efekti */
-    }
-
-
-    /* Film ve Yorum Listesi Öğeleri */
-    .list-group-item {
-        background-color: #ffffff; /* Beyaz arka plan */
-        border: 1px solid rgba(0, 0, 0, 0.1); /* Yumuşak gri kenarlık */
-        border-radius: 0.5rem; /* Hafif yuvarlak köşe */
-        margin-bottom: 0.8rem; /* Öğeler arası dikey boşluk */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); /* Hafif gölge */
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Yumuşak geçiş */
-        padding: 1.2rem 1.5rem; /* İç boşluk */
-    }
-
-        .list-group-item:hover {
-            transform: translateY(-3px); /* Üzerine gelince hafif kalkma */
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12); /* Biraz daha belirgin gölge */
-            z-index: 1; /* Diğerlerinin üzerine çıkması için */
-            position: relative; /* z-index için gerekli */
-            border-color: #b8daff; /* Hover'da açık mavi kenarlık */
-        }
-
-        /* Film listesi içindeki etiketler (Name:, Date: vs.) */
-        .list-group-item p strong {
-            color: #0056b3; /* Etiket rengini başlık rengiyle aynı yap */
-            font-weight: 700; /* Daha kalın */
-        }
-
-    /* İstatistik Kartları */
-    .row.text-center .col-md-3 .card {
-        border: none; /* Bootstrap kenarlığını kaldır */
-        border-radius: 0.75rem; /* Daha yuvarlak köşeler */
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        background-color: #e9f2ff; /* Çok açık mavi kart arka planı */
-        /* shadow-sm class'ı zaten var, onu kullanıyoruz */
-    }
-
-        .row.text-center .col-md-3 .card:hover {
-            transform: translateY(-5px); /* Daha belirgin kalkma */
-            box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.18) !important; /* Bootstrap gölgesini ezen daha güçlü hover gölgesi */
-            background-color: #d4e6ff; /* Hover'da biraz daha koyu açık mavi */
-        }
-
-        /* İstatistik Kart İçeriği (Sayı ve Metin) */
-        .row.text-center .col-md-3 .card h5 {
-            font-size: 2.5rem; /* Sayı boyutu büyüt */
-            font-weight: 700;
-            color: #007bff; /* Mavi renk */
-            margin-bottom: 0.2rem;
-        }
-
-        .row.text-center .col-md-3 .card p {
-            font-size: 1rem; /* Etiket boyutu büyüt */
-            color: #5a6268; /* Koyu gri etiket rengi */
-            margin-bottom: 0;
-        }
-
-    /* Yatay Çizgiler */
-    hr {
-        margin-top: 2.5rem; /* Üst boşluk */
-        margin-bottom: 2.5rem; /* Alt boşluk */
-        border: 0;
-        border-top: 1px solid #b8daff; /* Açık mavi çizgi */
-    }
-
-    /* "Henüz film/yorum eklenmemiş" gibi mesajlar */
-    h3 + p {
-        color: #004085; /* Koyu mavi metin rengi */
-        font-style: normal; /* Eğik yazıyı kaldır */
-        padding: 15px 20px; /* İç boşluk */
-        background-color: #cce5ff; /* Açık mavi arka plan */
-        border: 1px solid #b8daff; /* Açık mavi kenarlık */
-        border-radius: 0.5rem; /* Yuvarlak köşeler */
-        display: inline-block; /* Sadece metin kadar yer kaplasın */
-        margin-top: 1rem; /* Başlıktan sonra boşluk */
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* Hafif gölge */
-    }
-</style>
-
-
+﻿@model CinemaArchiveProje.ViewModels.HomePageViewModel
 @{
     ViewData["Title"] = "Ana Sayfa";
-    var isAdmin = ViewBag.IsAdmin as bool? ?? false;
 }
 
-<h1>Hoş geldiniz!</h1>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <p>@User.Identity.Name olarak giriş yaptınız.</p>
-}
-else
-{
-    <p>Lütfen giriş yapınız ya da kayıt olunuz.</p>
-}
+<div class="sticky-filter">
+    <form asp-action="Index" method="get" class="container row g-2">
+        <div class="col-md-3">
+            <input type="text" name="searchString" value="@Model.SearchString" class="form-control" placeholder="Film adı ara..." />
+        </div>
+        <div class="col-md-2">
+            <select name="genreId" class="form-select">
+                <option value="">Tür seç</option>
+                @foreach (var genre in (SelectList)ViewBag.Genres)
+                {
+                    <option value="@genre.Value" selected="@(genre.Selected ? "selected" : null)">@genre.Text</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="directorId" class="form-select">
+                <option value="">Yönetmen seç</option>
+                @foreach (var director in (SelectList)ViewBag.Directors)
+                {
+                    <option value="@director.Value" selected="@(director.Selected ? "selected" : null)">@director.Text</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="countryId" class="form-select">
+                <option value="">Ülke seç</option>
+                @foreach (var country in (SelectList)ViewBag.Countries)
+                {
+                    <option value="@country.Value" selected="@(country.Selected ? "selected" : null)">@country.Text</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+        </div>
+    </form>
+</div>
 
-<h3>Son Eklenen Filmler</h3>
-<form asp-action="Index" method="get" class="mb-4 row g-2">
-    <div class="col-md-3">
-        <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control" placeholder="Film adı ara..." />
-    </div>
-    <div class="col-md-2">
-        <select name="genreId" class="form-select">
-            <option value="">Tür seç</option>
-            @foreach (var genre in (SelectList)ViewBag.Genres)
-            {
-                <option value="@genre.Value" selected="@(genre.Selected ? "selected" : null)">@genre.Text</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-2">
-        <select name="directorId" class="form-select">
-            <option value="">Yönetmen seç</option>
-            @foreach (var director in (SelectList)ViewBag.Directors)
-            {
-                <option value="@director.Value" selected="@(director.Selected ? "selected" : null)">@director.Text</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-2">
-        <select name="countryId" class="form-select">
-            <option value="">Ülke seç</option>
-            @foreach (var country in (SelectList)ViewBag.Countries)
-            {
-                <option value="@country.Value" selected="@(country.Selected ? "selected" : null)">@country.Text</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-3">
-        <button type="submit" class="btn btn-primary w-100">Filtrele</button>
-    </div>
-</form>
-
-@if (Model == null || !Model.Any())
-{
-    <div class="alert alert-info">Film bulunamadı.</div>
-}
-else
-{
-    <ul class="list-group">
-        @foreach (var movie in Model)
+<section class="container my-4">
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
+        @foreach (var genre in (List<Genre>)ViewBag.AllGenres)
         {
-            <li class="list-group-item p-0 border-0">
-                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="text-decoration-none text-dark">
-                    <div class="d-flex align-items-start p-3 hover-shadow" style="cursor: pointer;">
-                        <img src="@movie.PosterUrl" alt="@movie.Title" class="me-3 rounded" style="width: 100px; height: 150px; object-fit: cover;" />
-                        <div>
-                            <strong>@movie.Title</strong><br />
-                            <small>
-                                Yayın Tarihi: @movie.ReleaseDate.ToShortDateString() |
-                                Ülke: @movie.Country?.Name |
-                                Tür: @movie.Genre?.Name |
-                                Yönetmen: @movie.Director?.Name
-                            </small>
-                            <p class="mb-0">
-                                @(movie.Description?.Length > 100 ? movie.Description.Substring(0, 100) + "..." : movie.Description)
-                            </p>
-                        </div>
+            <a asp-controller="Home" asp-action="Index" asp-route-genreId="@genre.Id" class="btn btn-outline-info">
+                @genre.Name.ToUpper()
+            </a>
+        }
+    </div>
+</section>
+
+<!-- HERO SECTION -->
+@if (Model.HeroMovie != null)
+{
+    <a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.HeroMovie.Id" class="text-decoration-none text-light">
+        <section class="hero-section-grid mb-5 hover-glow">
+            <div class="hero-poster">
+                <img src="@Model.HeroMovie.PosterUrl" alt="@Model.HeroMovie.Title" />
+            </div>
+            <div class="hero-info">
+                <h1>@Model.HeroMovie.Title</h1>
+                <p class="description">
+                    @(Model.HeroMovie.Description?.Length > 300
+                        ? Model.HeroMovie.Description.Substring(0, 300) + "..."
+                        : Model.HeroMovie.Description)
+                </p>
+                <div class="meta">
+                    <span>@Model.HeroMovie.ReleaseDate.ToShortDateString()</span> •
+                    <span>@Model.HeroMovie.Genre?.Name</span> •
+                    <span>@Model.HeroMovie.Director?.Name</span> •
+                    <span>@Model.HeroMovie.Country?.Name</span>
+                </div>
+            </div>
+        </section>
+    </a>
+}
+
+
+<!-- FİLMLER TÜRE GÖRE -->
+@foreach (var genre in Model.MoviesByGenre.Keys)
+{
+    <section class="genre-section position-relative">
+        <h2 class="genre-title">@genre</h2>
+
+        <button class="scroll-btn left" onclick="scrollGenreRow(this, 'left')">&#10094;</button>
+        <button class="scroll-btn right" onclick="scrollGenreRow(this, 'right')">&#10095;</button>
+
+        <div class="genre-row scrollable-row">
+            @foreach (var movie in Model.MoviesByGenre[genre])
+            {
+                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="film-card text-decoration-none text-light">
+                    <img src="@movie.PosterUrl" alt="@movie.Title" style="height: 300px; object-fit: cover; width: 100%;" />
+                    <div class="p-2">
+                        <h5>@movie.Title</h5>
+                        <small>@movie.ReleaseDate.ToShortDateString()</small>
                     </div>
                 </a>
-            </li>
-        }
-    </ul>
+            }
+        </div>
+    </section>
+
+
 }
 
-
-<hr />
-
-<!-- Views/Home/Index.cshtml -->
-<h3>Son Yorumlar</h3>
-
+<!-- SON YORUMLAR -->
 @if (ViewBag.LatestReviews != null && ((IEnumerable<CinemaArchiveProje.Models.Review>)ViewBag.LatestReviews).Any())
 {
+    <h3>Son Yorumlar</h3>
     <ul class="list-group">
         @foreach (var review in (IEnumerable<CinemaArchiveProje.Models.Review>)ViewBag.LatestReviews)
         {
@@ -225,37 +123,30 @@ else
 }
 else
 {
+    <h3>Son Yorumlar</h3>
     <p>Henüz yorum yapılmamış.</p>
 }
 
-<hr />
 
-<!-- Views/Home/Index.cshtml -->
-<h3>İstatistikler</h3>
-<div class="row text-center">
-    <div class="col-md-3">
-        <div class="card shadow-sm p-3">
-            <h5>@ViewBag.MovieCount</h5>
-            <p>Film</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card shadow-sm p-3">
-            <h5>@ViewBag.DirectorCount</h5>
-            <p>Yönetmen</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card shadow-sm p-3">
-            <h5>@ViewBag.ActorCount</h5>
-            <p>Oyuncu</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card shadow-sm p-3">
-            <h5>@ViewBag.ReviewCount</h5>
-            <p>Yorum</p>
-        </div>
-    </div>
-</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".scroll-btn");
 
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                const direction = button.classList.contains("left") ? "left" : "right";
+                const genreSection = button.closest(".genre-section");
+                const row = genreSection.querySelector(".genre-row");
+                const card = row.querySelector(".film-card");
+
+                if (!row || !card) return;
+
+                const scrollAmount = card.offsetWidth + 20; // 20px: assumed gap
+                row.scrollBy({
+                    left: direction === "left" ? -scrollAmount : scrollAmount,
+                    behavior: "smooth"
+                });
+            });
+        });
+    });
+</script>

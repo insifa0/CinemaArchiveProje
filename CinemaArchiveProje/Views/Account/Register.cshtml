@@ -7,31 +7,70 @@
 <style>
     .register-container {
         max-width: 400px;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        font-family: Arial, sans-serif;
+        margin: 80px auto;
+        background-color: #1a1a1d;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        font-family: 'Montserrat', sans-serif;
+        color: #f1f1f1;
     }
 
-    h2 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #004080;
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.2rem;
+            color: #00bcd4;
+            letter-spacing: 1px;
+        }
+
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+        color: #ccc;
     }
+
+    .form-control {
+        background-color: #121212;
+        border: 1px solid #333;
+        color: #fff;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        padding: 10px 12px;
+    }
+
+        .form-control::placeholder {
+            color: #888;
+        }
 
     .btn-success {
         width: 100%;
+        background-color: #28a745;
+        border: none;
+        padding: 10px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: background-color 0.2s ease;
     }
 
-    .form-group label {
-        font-weight: bold;
-    }
+        .btn-success:hover {
+            background-color: #218838;
+        }
 
     .validation-summary-errors {
-        color: red;
-        margin-top: 10px;
+        color: #ff6b6b;
+        background-color: #2e1e1e;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid #e74c3c;
+    }
+
+    .text-danger {
+        color: #ff6b6b;
+        font-size: 0.9rem;
     }
 </style>
 
@@ -41,15 +80,15 @@
     <form asp-action="Register" method="post">
         <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
 
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label asp-for="Username"></label>
-            <input asp-for="Username" class="form-control" />
+            <input asp-for="Username" class="form-control" placeholder="Kullanıcı adınızı girin" />
             <span asp-validation-for="Username" class="text-danger"></span>
         </div>
 
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label asp-for="Password"></label>
-            <input asp-for="Password" type="password" class="form-control" />
+            <input asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi girin" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 

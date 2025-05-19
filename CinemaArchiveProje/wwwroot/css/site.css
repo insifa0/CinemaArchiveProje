@@ -1,31 +1,253 @@
-html {
-  font-size: 14px;
+/* === DARK MODE === */
+html, body {
+    background-color: #121212 !important;
+    color: #f1f1f1;
+    min-height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 60px;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* === NAVBAR & GENEL BLOKLAR === */
+.navbar,
+.footer,
+.container,
+.card,
+.form-control {
+    background-color: #1a1a1d !important;
+    color: #f1f1f1 !important;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    .navbar a.nav-link,
+    .navbar-brand,
+    .footer a {
+        color: #f1f1f1 !important;
+    }
+
+        .navbar a.nav-link:hover,
+        .footer a:hover {
+            color: #00bcd4 !important;
+            text-shadow: 0 0 5px #00bcd4;
+        }
+
+/* === BUTON === */
+.btn-primary {
+    background-color: #007acc;
+    border-color: #007acc;
+    color: white;
+    transition: all 0.2s ease-in-out;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+    .btn-primary:hover {
+        background-color: #005fa3;
+        transform: scale(1.03);
+    }
+
+/* === KART ANÝMASYONU === */
+.card {
+    transform: scale(1);
+    transition: all 0.3s ease;
 }
 
-body {
-  margin-bottom: 60px;
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+/* === BAÞLIKLAR === */
+h1, h2, h3 {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1px;
+    animation: fadeInDown 0.6s ease;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* === SCROLL FADE === */
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.6s ease-out;
+}
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+/* === ALERT === */
+.alert-info {
+    background-color: #22242a !important;
+    color: #ccc !important;
+    border: none;
+    border-left: 4px solid #00bcd4;
+}
+
+/* === HERO SECTION === */
+.hero-section-grid {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background-color: #1a1a1d;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.hero-poster img {
+    width: 250px;
+    height: 375px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.hero-info h1 {
+    font-size: 3rem;
+    font-family: 'Bebas Neue', cursive;
+    margin-bottom: 15px;
+    color: #00bcd4;
+}
+
+.hero-info .description {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #ccc;
+    max-width: 700px;
+}
+
+.hero-info .meta {
+    font-size: 0.95rem;
+    color: #888;
+    font-style: italic;
+}
+
+/* === FÝLM KARTLARI === */
+.film-card {
+    flex: 0 0 200px;
+    min-width: 200px;
+    background: #1e1e22;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+    .film-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+/* === GENRE BAÞLIKLARI === */
+.genre-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #00bcd4;
+    font-family: 'Bebas Neue', cursive;
+}
+
+/* === YATAY KAYDIRMA === */
+.genre-row {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-color: #888 #222;
+    scrollbar-width: thin;
+}
+
+    .genre-row::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .genre-row::-webkit-scrollbar-thumb {
+        background: #666;
+        border-radius: 4px;
+    }
+
+    .genre-row::-webkit-scrollbar-track {
+        background: #222;
+    }
+
+/* === GÝRÝÞ FORMU === */
+.login-form-wrapper {
+    background-color: #1a1a1d;
+    color: #f1f1f1;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 400px;
+    margin: 60px auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+    .login-form-wrapper h2,
+    .login-form-wrapper h1 {
+        text-align: center;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #00bcd4;
+    }
+
+    .login-form-wrapper .form-control {
+        background-color: #121212;
+        border: 1px solid #333;
+        color: #fff;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+        .login-form-wrapper .form-control::placeholder {
+            color: #bbb;
+        }
+
+    .login-form-wrapper .btn-primary {
+        background-color: #007acc;
+        border: none;
+        width: 100%;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .login-form-wrapper .btn-primary:hover {
+            background-color: #005fa3;
+        }
+
+/* === ADMIN PANEL TABLO === */
+.table {
+    background-color: #1e1e22 !important;
+    color: #f1f1f1 !important;
+    border: none;
+}
+
+    .table th {
+        background-color: #2a2a2e !important;
+        color: #00bcd4;
+        border-bottom: 1px solid #444 !important;
+    }
+
+    .table td {
+        background-color: #1e1e22 !important;
+        color: #ddd !important;
+        border-color: #333 !important;
+    }
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #252529 !important;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #2f2f35 !important;
 }
